@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang='es-MX'>
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Flor de Luna🌷🌙 - By Luis Fernando Olguin Pérez</title>
+  <link rel="icon" type="image/jpg" href="https://image.freepik.com/vector-gratis/flor-loto-luna-senal-neon-circulo-meditacion-espiritualidad-yoga_1262-20120.jpg"/>
+  <style>
+body{font-family:sans-serif;font-size:calc(100vh/40);height:100vh;margin:0;position:fixed;-webkit-user-select: none;-moz-user-select: none;-khtml-user-select: none;-ms-user-select:none;user-select: none;width:100vw}h1{font-size:calc(100vw/15)}h2{font-size:calc(100vw/20)}.close{position:relative;bottom:0;text-align:center;z-index:999;background-color:#112;border-radius:5px;color:#fff;font-size:5vmin;font-weight:400;line-height:.7;padding:10px;border:1px solid #334}#modal{border-radius:0 0 0 50%;position:fixed;width:40%;height:100%;top:0;right:0;bottom:0;margin:0;background-color:rgba(0,0,0,.5);cursor:pointer;transition:.5s;overflow-y:hidden}#modalText{margin:auto;color:#fff;line-height:2;padding:1vh;text-align:center}
+  </style>
+</head>
+<body>
+  <div id="modal">
+    <div id="modalText">
+    <h1>Flor de Luna🌷🌙</h1>
+    <h2>"La luna ve muchas flores nocturnas; Las flores nocturnas ven tan solo una luna." (Jean Ingelow)</h2>
+      <p>
+      Toca la pantalla para dibujar una nueva flor nocturna.
+      </p>
+      <button class="close" onclick="modalOff()">Iniciar...</button>
+    </div>
+  </div>
+  <canvas id="cvs"></canvas>
+  <script>
+let W,H,ctx,ropes,turn,mouse,touch,move=!1,u={drawC(t,e,s,i){ctx.beginPath(),ctx.fillStyle=i,ctx.arc(t,e,s,0,2*Math.PI),ctx.fill(),ctx.closePath()},drawH(t,e,s,i){ctx.beginPath(),ctx.strokeStyle=i;let n=2*u.ipick(0,1)+.5+u.pick(.2,0),o=s,h=8*s,c=-h*Math.cos(n),l=h*Math.sin(n);ctx.ellipse(t+c,e-l,h,o,n,0,2*Math.PI),ctx.stroke(),ctx.closePath()},drawL(t,e,s,i,n,o){ctx.beginPath(),ctx.moveTo(t,e),ctx.lineWidth=n,ctx.strokeStyle=o,ctx.lineTo(s,i),ctx.stroke(),ctx.closePath()},pick(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;return Math.random()*(t-e)+e},ipick(){let t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:1,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0;return Math.round(Math.random()*(t-e)+e)},dist:(t,e,s,i)=>Math.hypot(s-t,i-e),writeT(t,e,s){ctx.beginPath(),ctx.font="25px serif",ctx.fillStyle="yellow",ctx.textAlign="center",ctx.textBaseline="middle",ctx.fillText(t,e,s),ctx.fill(),ctx.closePath()}},to=[2,3,4,5,6,7,1.25,3.2,2.5,1.5];class Rope{constructor(t,e,s,i,n){this.ref={x:t,y:e},this.si=Math.min(.07*this.ref.x,.07*(W-this.ref.x),.1*this.ref.y,.05*(H-this.ref.y)),this.d={x:1,y:-1.3},this.z=n,this.r=s,this.c=i,this.ar=6,this.f=1,this.n=[],this.n.push(new Node(this.ref.x,H,this.r,this.c)),this.createCords()}createCords(){let t,e;for(let s=0;s<10;s++){t=this.n[0].x+5*(s+1),e=this.n[0].y+5*(s+1);let i="this.c";this.n.push(new Node(t,H,u.pick(),i))}}update(t){for(let e=0;e<this.n.length;e++){if(e)this.n[e].x+=(this.n[e-1].x-this.n[e].x)/(e+1),this.n[e].y+=(this.n[e-1].y-this.n[e].y)/(e+1);else{if(mouse.x&&t!=turn)continue;this.z+=.01;let s=7*Math.sin(this.ar*this.z);if(this.n[e].x=mouse.x||this.ref.x+this.si*s*Math.cos(this.z),this.n[e].y=mouse.y||this.ref.y-this.si*s*Math.sin(this.z),mouse.x){this.ref.x=mouse.x,mouse.y&&(this.ref.y=mouse.y),this.ar=to[Math.floor(this.ref.y*(to.length-1)/H)],mouse.x=null,mouse.y=null,turn+=2,turn%=ropes.length,this.si=Math.min(.07*this.ref.x,.07*(W-this.ref.x),.1*this.ref.y,.05*(H-this.ref.y));for(let t=0;t<10;t++)this.n[t].x=this.n[0].x+5*(t+1),this.n[t].y=H}}this.n[e].draw(this.ref,this.si)}}}class Node{constructor(t,e,s,i){this.x=t,this.y=e,this.r=s,this.c=i}draw(t,e){let s=this.r,i=this.c;u.dist(this.x,this.y,t.x,t.y)>7*e?(i="lime",u.ipick(35,0)?u.drawC(this.x,this.y,s,i):(s*=7,u.drawH(this.x,this.y,s,i))):u.drawC(this.x,this.y,s,i)}check(t,e,s,i){return this.x>t.x+2*s||this.x<t.x-2*s}}let eventsListener=function(){mouse={x:null,y:null},touch={x:null,y:null},cvs.addEventListener("mousemove",function(t){move?(mouse.x=t.clientX,mouse.y=t.clientY):(mouse.x=null,mouse.y=null)}),cvs.addEventListener("mousedown",function(t){move=!0,mouse.x=t.clientX,mouse.y=t.clientY}),cvs.addEventListener("mouseup",function(t){move=!1}),cvs.addEventListener("touchstart",function(t){let e=t.changedTouches[0],s=parseInt(e.clientX),i=parseInt(e.clientY);mouse.x=s-cvs.offsetLeft,mouse.y=i-cvs.offsetTop,move=!1}),cvs.addEventListener("touchmove",function(t){if(move){let e=t.changedTouches[0],s=parseInt(e.clientX),i=parseInt(e.clientY);t.preventDefault(),mouse.x=s-cvs.offsetLeft,mouse.y=i-cvs.offsetTop}},{passive:!1}),cvs.addEventListener("touchend",function(t){mouse.x=null,mouse.y=null,move=!1})},animate=function(){ropes.forEach(function(t,e){t.update(e)}),requestAnimationFrame(animate)},init=function(){ctx=document.getElementById("cvs").getContext("2d"),W=ctx.canvas.width=innerWidth,H=ctx.canvas.height=innerHeight,turn=0,(ropes=[]).push(new Rope(.5*W,.25*H,1,"hotpink",3.341)),ropes.push(new Rope(.25*W,.25*H,3,"white",5)),ropes.push(new Rope(.5*W,.25*H,2,"cyan",3.341)),ctx.fillStyle="#334",ctx.fillRect(0,0,W,H),eventsListener(),requestAnimationFrame(animate)};onload=init;var startEvent=navigator.userAgent.match(/ipod|ipad|iphone|10_/i)?"touchstart":"click";function modalOn(){modal.style.height="100%",modal.style.top="0%",document.getElementById("cvs").style["pointer-events"] = "none";}function modalOff(){modal.style.height="0%",modal.style.top="0%",document.getElementById("cvs").style["pointer-events"] = "all";}modalOn();
+  </script>
+</body>
+</html>
